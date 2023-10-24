@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import subprocess
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -6,13 +8,17 @@ from sklearn.metrics import accuracy_score, classification_report
 import nltk
 from nltk.corpus import stopwords
 
-df=pd.read_csv(r"C:\Users\tomas\OneDrive\Desktop\facultad\4to cuatrimestre\Procesamiento del lenguaje natural\TP_1\dataset_tp2.csv")
-
-categoria_mapping = {'Policiales': 0, 'Politica': 1, 'Futbol': 2, 'Tecnologia': 3}
-df["labels"]=df["Categoría"].map(categoria_mapping)
-
-#nltk.download('stopwords')
+nltk.download('stopwords')
 spanish_stop_words = stopwords.words('spanish')
+
+if not os.path.exists("dataset.csv"):
+    # Si no existe, ejecuta el script .\Ejercicio_1\main.py
+    subprocess.run(["python", r".\Ejercicio_1\main.py"])
+
+df = pd.read_csv("dataset.csv")
+
+categoria_mapping = {'Policiales': 0, 'Politica': 1, 'Deportes': 2, 'Tecnologia': 3}
+df["labels"]=df["Categoría"].map(categoria_mapping)
 
 X = df["Titulo"].str.lower()
 y = df["labels"]

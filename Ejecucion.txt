@@ -1,2 +1,4 @@
 Set-ExecutionPolicy Bypass -Scope Process
 .\NLP\Scripts\activate
+
+source linux/bin/activate

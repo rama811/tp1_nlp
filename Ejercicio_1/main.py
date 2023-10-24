@@ -1,5 +1,11 @@
 import pandas as pd
 from Obtencion_de_datos import obtener_enlaces_noticias, web_scraping, construir_dataset
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+spanish_stop_words = stopwords.words('spanish')
+
 
 urls_policiales = obtener_enlaces_noticias('https://www.rosario3.com/seccion/policiales/', 20)
 urls_deporte = obtener_enlaces_noticias('https://www.rosario3.com/seccion/deportes/', 20)

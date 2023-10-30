@@ -7,10 +7,10 @@ nltk.download('stopwords')
 spanish_stop_words = stopwords.words('spanish')
 
 
-urls_policiales = obtener_enlaces_noticias('https://www.rosario3.com/seccion/policiales/', 20)
-urls_deporte = obtener_enlaces_noticias('https://www.rosario3.com/seccion/deportes/', 20)
-urls_politica = obtener_enlaces_noticias('https://www.rosario3.com/seccion/politica/', 20)
-urls_tecnologia = obtener_enlaces_noticias('https://www.rosario3.com/seccion/tecnologia/', 20)
+urls_policiales = obtener_enlaces_noticias('https://www.rosario3.com/seccion/policiales/', 40)
+urls_deporte = obtener_enlaces_noticias('https://www.rosario3.com/seccion/deportes/', 40)
+urls_politica = obtener_enlaces_noticias('https://www.rosario3.com/seccion/politica/', 40)
+urls_tecnologia = obtener_enlaces_noticias('https://www.rosario3.com/seccion/tecnologia/', 40)
 
 df_policiales = construir_dataset("Policiales", urls_policiales)
 df_deportes = construir_dataset("Deportes", urls_deporte)

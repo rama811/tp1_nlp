@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+import requests
+from bs4 import BeautifulSoup
+
 def obtener_enlaces_noticias(url_pagina: str, cantidad: int = 10) -> list[str]:
     """
     Obtiene una lista de URLs de noticias de una página web.
@@ -29,12 +32,16 @@ def obtener_enlaces_noticias(url_pagina: str, cantidad: int = 10) -> list[str]:
     # Encuentra los elementos HTML que contienen los enlaces a las noticias
     enlaces = soup.find_all('a', class_='cover-link')
 
-    # Itera a través de los enlaces y obtén la URL completa
-    for enlace in enlaces[:cantidad]:
+    # Filtra los enlaces que no están dentro de las clases especificadas
+    enlaces_filtrados = [enlace for enlace in enlaces if not enlace.find_parent(class_=["ahora-holder", "footer", "ranking"])]
+
+    # Itera a través de los enlaces filtrados y obtén la URL completa
+    for enlace in enlaces_filtrados[:cantidad]:
         url_noticia = url_pagina.rsplit("/", 2)[0] + enlace['href']
         enlaces_noticias.append(url_noticia)
 
     return enlaces_noticias
+
         
 def web_scraping(url_pagina: str) -> tuple[str, str]:
     """

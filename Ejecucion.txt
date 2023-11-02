@@ -1,4 +1,6 @@
 Set-ExecutionPolicy Bypass -Scope Process
 .\NLP\Scripts\activate
 
+pip install -r requirements.txt
+
 source linux/bin/activate

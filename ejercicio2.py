@@ -1,6 +1,4 @@
 import pandas as pd
-import os
-import subprocess
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -8,17 +6,13 @@ from sklearn.metrics import accuracy_score, classification_report
 import nltk
 from nltk.corpus import stopwords
 
-nltk.download('stopwords')
-spanish_stop_words = stopwords.words('spanish')
+df=pd.read_csv(r"C:\Users\tomas\OneDrive\Desktop\facultad\4to cuatrimestre\Procesamiento del lenguaje natural\TP_1\dataset_tp2.csv")
 
-if not os.path.exists("dataset.csv"):
-    # Si no existe, ejecuta el script .\Ejercicio_1\main.py
-    subprocess.run(["python", r".\Ejercicio_1\main.py"])
-
-df = pd.read_csv("dataset.csv")
-
-categoria_mapping = {'Policiales': 0, 'Politica': 1, 'Deportes': 2, 'Tecnologia': 3}
+categoria_mapping = {'Policiales': 0, 'Politica': 1, 'Deporte': 2, 'Tecnologia': 3}
 df["labels"]=df["Categoría"].map(categoria_mapping)
+
+#nltk.download('stopwords')
+spanish_stop_words = stopwords.words('spanish')
 
 X = df["Titulo"].str.lower()
 y = df["labels"]
@@ -30,13 +24,13 @@ X_train_vectorized = vectorizer.fit_transform(X_train)
 X_test_vectorized = vectorizer.transform(X_test)
 
 
-modelo_LR = LogisticRegression(max_iter=1000)
+modelo_LR = LogisticRegression()
 modelo_LR.fit(X_train_vectorized, y_train)
 
 # Evaluación del modelo de Regresión Logística
 y_pred_LR = modelo_LR.predict(X_test_vectorized)
 acc_LR = accuracy_score(y_test, y_pred_LR)
-report_LR = classification_report(y_test, y_pred_LR, zero_division=1)
+report_LR = classification_report(y_test, y_pred_LR)
 
 print("Precisión Regresión Logística:", acc_LR)
 print("Reporte de clasificación Regresión Logística:\n", report_LR)
@@ -67,5 +61,4 @@ etiquetas_predichas = modelo_LR.predict(nuevas_frases_vectorizadas)
 for i, etiqueta in enumerate(etiquetas_predichas):
     categoria_predicha = [key for key, value in categoria_mapping.items() if value == etiqueta][0]
     print(f"La frase '{nuevas_frases[i]}' pertenece a la categoría: {categoria_predicha}")
-
 
